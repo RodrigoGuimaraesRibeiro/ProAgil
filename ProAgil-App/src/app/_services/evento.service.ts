@@ -7,6 +7,7 @@ import { Evento } from '../_models/Evento';
   providedIn: 'root'
 })
 export class EventoService {
+  [x: string]: any;
   baseURL = 'http://localhost:5000/api/evento';
 
 constructor(private http: HttpClient ) { }
@@ -15,12 +16,25 @@ constructor(private http: HttpClient ) { }
     return this.http.get<Evento[]>(this.baseURL);
   }
 
-  getEventoByTema(tema:string): Observable<Evento[]> {
+  getEventoByTema(tema: string): Observable<Evento[]> {
     return this.http.get<Evento[]>(`${this.baseURL}/getByTema/${tema}`);
   }
 
   getEventoById(id: number): Observable<Evento> {
     return this.http.get<Evento>(`${this.baseURL}/${id}`);
-  } 
+  }
+
+  // tslint:disable-next-line: typedef
+  postEvento(evento: Evento) {
+    return this.http.post(this.baseURL, evento);
+  }
+
+  putEvento(evento: Evento) { 
+    return this.http.put(`${this.baseURL}/${evento.id}`, evento);
+  }
+
+  deleteEvento(id: number){
+    return this.http.delete(`${this.baseURL}/${id}`);
+  }
 
 }
